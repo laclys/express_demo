@@ -15,6 +15,16 @@ npm install body-parser
 npm run build
 
 # serve examples at localhost:2333
-npm run dev
+node dev
+
+#-----about weibo-----
+# install mysql
+npm install mysql
+
+#EXEC sql statement
+liuyanban.sql
+
+# run
+node liuyanbanServer.js
 
 ```
