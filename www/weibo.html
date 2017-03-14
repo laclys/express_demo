@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script>
+        $(function () {
+            var oUser = $("#user");
+            var oCon = $("#content");
+            var oBtn = $("#btn");
+            var oUl = $('ul');
+            var oA=$('ul').find('a');
+            $.ajax({
+                url: '/getCon',
+                data: {},
+                success: function (r) {
+                    if (!r.state) {
+                        $.each(r.data.reverse(), function (index, value) {
+                            $(
+                                `<li data-id='${value.id}'>
+            <p>${value.content}</p>
+            <i>${value.user}</i><br><span>${value.time}</span><br>
+            <a href="javascript:;">删除</a>
+        </li>`
+                            ).appendTo(oUl);
+                        });
+                    }
+                }
+            });
+            oBtn.click(function () {
+                $.ajax({
+                    url: '/add',
+                    data: {
+                        user: oUser.val(),
+                        content: oCon.val()
+                    },
+                    success: function (r) {
+                        if (!r.state) {
+                            oUl.prepend($(
+                                `<li data-id='${r.data.id}'>
+            <p>${oCon.val()}</p>
+            <i>${oUser.val()}</i><br><span>${r.data.time}</span><br>
+            <a href="javascript:;">删除</a>
+        </li>`
+                            ))
+                        }
+                    }
+                });
+            });
+            oUl.on('click','a',function () {
+                // alert(1);
+                var that=$(this);
+                $.ajax({
+                    url: '/dele',
+                    data: {
+                        id: this.parentNode.dataset.id
+                    },
+                    success: function (r) {
+                        if (!r.state) {
+                            that.parent().remove();
+                        }
+                    }
+
+                });
+            })
+        });
+    </script>
+</head>
+
+<body>
+    用户：<input type="text" name="user" id="user"><br> 留言：
+    <input type="text" name="content" id="content">
+    <input type="button" value="提交" id="btn">
+    <ul>
+        <!--<li>
+            <p>title</p>
+            <i>name</i><span>time</span>
+        </li>-->
+    </ul>
+</body>
+
+</html>
