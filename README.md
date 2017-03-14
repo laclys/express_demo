@@ -1,4 +1,4 @@
-
+demos about (node.js+express+mysql)(≧ω≦)/
 ### Development Setup
 
 ``` bash
@@ -17,7 +17,7 @@ npm run build
 # serve examples at localhost:2333
 node dev
 
-#-----about weibo-----
+#-----about liuyanban-----(mysql+express)
 # install mysql
 npm install mysql
 
